@@ -1,9 +1,19 @@
 import Link from 'next/link';
 
 export default function Page() {
+  const routes = [
+    { url: '/semestr3/progstruk', name: 'Programowanie strukturalne' },
+  ];
+
   return (
     <div>
-      <Link href='/semestr3/progstruk'>Programowanie strukturalne</Link>
+      {routes.map((route) => {
+        return (
+          <Link key={route.name} href={route.url}>
+            {route.name}
+          </Link>
+        );
+      })}
     </div>
   );
 }
