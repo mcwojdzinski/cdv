@@ -10,19 +10,21 @@ int tab[5] = {(10, 20, 30, 40, 50)};
 
 Jakie będą wartości następujących wyrażeń (odniesień do tej tablicy):
 
-(a) \_tab ........................................ (1 pkt.)
+(a) *tab - To odniesienie do pierwszego elementu tablicy. Zapis *tab jest równoważny tab[0], więc wartość tego wyrażenia to <b className="text-green-700">10</b>.
 
-(b) tab ........................................ (1 pkt.)
+(b) tab - Bezpośrednie odwołanie do tablicy zwraca adres pierwszego elementu. W tym przypadku będzie to adres pierwszego elementu tablicy, czyli <b className="text-green-700">2293584</b>.
 
-(c) tab[1] ........................................ (1 pkt.)
+(c) tab[1] - Odnosi się do drugiego elementu tablicy, który ma wartość <b className="text-green-700">20</b>.
 
-(d) \_(tab+4) ........................................ (1 pkt.)
+(d) _(tab+4) - To odniesienie do piątego elementu tablicy poprzez arytmetykę wskaźników. tab+4 oznacza adres piątego elementu tablicy, a _(tab+4) zwraca wartość tego elementu, czyli <b className="text-green-700">50</b>.
 
-(e) \*tab+4 ........................................ (1 pkt.)
+(e) *tab+4 - To sumowanie wartości pierwszego elementu tablicy (*tab równoważne tab[0], czyli 10) z wartością 4. Wynik tego wyrażenia będzie równy <b className="text-green-700">14</b>, ponieważ dodajemy 4 do wartości pierwszego elementu, a nie do adresu.
 
-(f) tab+1 ........................................ (1 pkt.)
+(f) tab+1 - Odnosi się do adresu drugiego elementu tablicy. Przesunięcie wskaźnika o 1 przesuwa go o jeden element w przód, więc wynikiem tego będzie adres drugiego elementu tablicy, co wskazuje na wartość <b className="text-green-700">2293588</b> (o ile elementy int mają rozmiar 4 bajtów, co jest typowe na wielu systemach).
 
 ### 2. Tabela obok przedstawia obraz w pamięci zmiennej p zdefiniowanej w języku C, jako int\* p[5]. Każdy wiersz reprezentuje wartość 32-bitową. Jakie będą wartości następujących wyrażeń (odniesień do tej zmiennej):
+
+TO DO
 
 (a) \*\*p ........................................ (1 pkt.)
 
@@ -39,3 +41,308 @@ Jakie będą wartości następujących wyrażeń (odniesień do tej tablicy):
 (g) \*p+2 ........................................ (1 pkt.)
 
 (h) \*p[2] ........................................ (1 pkt.)
+
+### 4. Jaka będzie wartość zmiennych a, b, c, d, e i f po wykonaniu poniższego fragmentu programu?
+
+```c
+int tab[5] = {1, 12, 30, 400, 5000};
+
+int *ptr, a, b, c, d, e, f;
+
+ptr = tab + 1;
+// Przesunięcie wskaźnika ptr na drugi element tablicy
+
+a = *ptr;
+// a = wartość wskaźnika ptr, czyli wartość drugiego elementu tablicy = 12
+
+b = ptr[2];
+// b = wartość trzeciego elementu za wskaźnikiem ptr,
+// czyli ptr + 2 = tab + 1 + 2 = tab + 3, czyli b = 400
+
+ptr++;
+// Przesunięcie wskaźnika ptr na następny element (trzeci element tablicy)
+
+c = *ptr + 2;
+// c = wartość wskaźnika ptr + 2,
+// czyli trzeciego elementu tablicy + 2 = 30 + 2 = 32
+
+d = *(ptr + 2);
+// d = wartość elementu oddalonego o 2
+// od wskaźnika ptr (czyli ptr + 2 = czwarty element tablicy) = 5000
+
+ptr++;
+// Przesunięcie wskaźnika ptr na kolejny element (czwarty element tablicy)
+
+e = ptr - tab;
+// e = indeks aktualnego elementu w stosunku do początku tablicy,
+// czyli obecny wskaźnik ptr - początek tablicy = 4 - 1 = 3
+
+f = *ptr - *tab;
+// f = wartość obecnego elementu wskaźnika ptr
+// wartość pierwszego elementu tablicy = 5000 - 1 = 4999
+
+```
+
+<p className='font-bold text-green-700'>
+  a -> 12, b -> 400, c -> 32, d -> 5000, e -> 3, f -> 399
+</p>
+
+### 5. Jaka będzie zawartość tablicy a w wyniku wykonania poniższego programu?
+
+<h2 className='text-red-500'>Do sprawdzenia</h2>
+
+```c
+main(){
+    int a[6] = {1, 2, 3, 4, 5, 6};
+    int *ptr;
+    ptr = a + 2; // ptr wskazuje na trzeci element tablicy a
+
+    ptr[1] = *ptr + 10; // ptr[1] to czwarty element, który teraz staje się wartością trzeciego elementu + 10, czyli 3 + 10 = 13
+    ptr[2] = ptr[0] + 20; // ptr[2] to piąty element, który teraz staje się wartością trzeciego elementu + 20, czyli 3 + 20 = 23
+
+    *a = *ptr; // Pierwszy element tablicy a staje się równy wartości trzeciego elementu, czyli 3
+
+    *ptr = a[1]; // Trzeci element tablicy (który wskazuje ptr) staje się równy wartości drugiego elementu tablicy a, czyli 2
+}
+```
+
+<p className='font-bold text-green-700'>
+  a[0] -> 3 <br />
+  a[1] -> 2 <br /> a[2] -> 2 <br /> a[3] -> 13 <br /> a[4] -> 23 <br /> a[5] -> 6
+</p>
+
+### 6. Jakie będą wartości zmiennych x, y i z po wykonaniu poniższego fragmentu programu, zakładając, że zmienna i została umieszczona pod adresem 2 340 000?
+
+```c
+int i, *p1, x, y, z;
+i = 7;
+p1 = &i; // p1 wskazuje na zmienną i
+*p1 = 1; // Wartość zmiennej i zmienia się na 1
+
+x = i; // x przyjmuje wartość zmiennej i, czyli 1
+y = (int)p1; // y przyjmuje adres zmiennej i, czyli y = adres zmiennej i = 2340000
+z = *p1; // z przyjmuje wartość wskazywaną przez p1, czyli z = *p1 = 1
+
+```
+
+<p className='font-bold text-green-700'>
+  x = 1 <br />
+  y = 2340000 <br />z = 1
+</p>
+
+### 7. Jaka będzie wartość zmiennych a, b, c, d, e i f po wykonaniu poniższego fragmentu programu?
+
+```c
+int *p1, *p2;
+int a = 1, b = 2, c = 3, d = 4, e = 5, f = 6;
+
+p1 = &c; // p1 wskazuje na zmienną c
+c = 11; // c = 11
+b = *p1; // b przyjmuje wartość wskazywaną przez p1, czyli b = *p1 = 11
+c = 22; // c = 22
+a = *p1; // a przyjmuje wartość wskazywaną przez p1, czyli a = *p1 = 22
+p2 = p1; // p2 wskazuje teraz tam, gdzie wskazuje p1 (czyli na zmienną c)
+e = *p2; // e przyjmuje wartość wskazywaną przez p2, czyli e = *p2 = 22
+*p2 = 45; // Zmienna wskazywana przez p2 (c) teraz ma wartość 45
+d = *p1; // d przyjmuje wartość wskazywaną przez p1, czyli d = *p1 = 45
+*p1 = 58; // Zmienna wskazywana przez p1 (c) teraz ma wartość 58
+f = *p2; // f przyjmuje wartość wskazywaną przez p2, czyli f = *p2 = 58
+```
+
+<p className='font-bold text-green-700'>
+  a = 22 <br />
+  b = 11 <br />
+  c = 58 <br />
+  d = 45 <br />
+  e = 22 <br />
+  f = 58 <br />
+</p>
+
+### 8. Jaka będzie wartość zmiennych a, b, c, d, e, f po wykonaniu poniższego fragmentu programu?
+
+```c
+void zmien(int *p, int q) {
+    static int r = 2; // zmienna r jest statyczna, zachowuje swoją wartość między wywołaniami funkcji
+    *p = r; // wartość wskaźnika p staje się równa wartości zmiennej r
+    r += q; // zmienna r jest zwiększana o wartość q
+    q = r; // wartość zmiennej q staje się równa wartości zmiennej r
+}
+
+int main() {
+    int a = 0, b = 1, c = 2, d = 3, e = 4, f = 5;
+    zmien(&a, b); // Przekazanie adresu zmiennej a oraz wartości b
+    zmien(&c, d); // Przekazanie adresu zmiennej c oraz wartości d
+    zmien(&e, f); // Przekazanie adresu zmiennej e oraz wartości f
+}
+
+```
+
+<p className='font-bold text-green-700'>
+  a = 2 (wartość zmiennej r po pierwszym wywołaniu zmien(&a, b)) <br />
+  b = 1 (wartość początkowa zmiennej b) <br />
+  c = 3 (wartość zmiennej r po drugim wywołaniu zmien(&c, d)) <br />
+  d = 3 (wartość początkowa zmiennej d) <br />
+  e = 6 (wartość zmiennej r po trzecim wywołaniu zmien(&e, f)) <br />f = 5
+  (wartość początkowa zmiennej f)
+</p>
+
+Wyjaśnienie:
+
+Funkcja zmien zmienia wartość wskaźnika p na wartość zmiennej statycznej r, zwiększa r o wartość q, a q przyjmuje wartość zmiennej r. Następnie, w main, zmienne są modyfikowane przez przekazanie odpowiednich adresów oraz wartości, jednak zmiana wartości q wewnątrz funkcji zmien nie wpływa na wartość zmiennych w main, ponieważ q jest przekazywane przez wartość, a nie przez referencję.
+
+### 9. Jaka będzie wartość zmiennych a, b, c, d, e i f w wyniku wykonania poniższego programu?
+
+```c
+int ff(int x, int *y){
+    x = 10;
+    *y = x + 13;
+    return x;
+}
+
+int gg(int *x, int y){
+    return ff(*x, &y);
+}
+
+main(){
+    int a=1, b=2, c=3, d=4, e=5, f=6;
+    c = gg(&a, b);
+    d = ff(e, &f);
+}
+```
+
+Wyjaśnienia
+
+<b>a</b> przedstawia wartość zmiennej a przed wywołaniem funkcji gg. Po wywołaniu
+gg, wartość a nie ulega zmianie, ponieważ została przekazana jako argument przez
+referencję (&a). Zatem a pozostaje równa 1.
+
+<b>b</b> nie zmienia się w trakcie wykonywania programu. Jest używane tylko jako
+argument funkcji gg. Po wywołaniu gg, wartość b nie jest modyfikowana, więc pozostaje
+równa 2.
+
+<b>c</b> jest zmienną lokalną w funkcji main. Jego wartość zmienia się, ponieważ
+przypisujemy mu wartość zwróconą przez funkcję gg. Funkcja gg zwraca wartość z funkcji
+ff, która z kolei zwraca wartość x (czyli 10). W wyniku c będzie równa 10.
+
+<b>d</b> również jest zmienną lokalną w funkcji main, która jest modyfikowana przez
+wywołanie funkcji ff. Po wykonaniu ff(e, &f), d przyjmuje wartość 10 (zwróconą przez
+ff, gdyż x w ff przyjmuje wartość 10).
+
+<b>e</b> pozostaje niezmienione, gdyż jest przekazywane do funkcji ff przez wartość,
+a nie przez referencję.
+
+<b>f</b> jest modyfikowane przez funkcję ff. Po wywołaniu ff(e, &f), f przyjmuje
+wartość 23, ponieważ *y w ff (czyli &f) jest ustawione na wartość x + 13, czyli 5+13.
+
+<p className='font-bold text-green-700'>
+  a = 1<br /> b = 2<br /> c = 10
+  <br /> d = 10
+  <br /> e = 5<br /> f = 23
+</p>
+
+### 10. Jaka będzie zawartość tablicy a po wykonaniu poniższego fragmentu programu?
+
+<h2 className='text-red-500'>Do sprawdzenia</h2>
+
+```c
+void zmien(int *t, int s) {
+    *t = s;     // Ustawienie pierwszego elementu tablicy a+1 na wartość z (czyli 0)
+    s = t[2];   // Przypisanie do zmiennej s wartości trzeciego elementu tablicy przesuniętej o 1 (czyli a[3])
+    t[1] = s;   // Przypisanie drugiemu elementowi tablicy wartości zmiennej s (czyli a[1] = a[3] = 4)
+    s = t[4];   // Przypisanie zmiennej s wartości piątego elementu tablicy przesuniętej o 1 (czyli a[5])
+    t[3] = s;   // Przypisanie czwartemu elementowi tablicy wartości zmiennej s (czyli a[3] = a[5] = 6)
+}
+
+int main() {
+    int z = 0, a[6] = {1, 2, 3, 4, 5, 6};
+    zmien(a + 1, z); // Przekazanie do funkcji zmien adresu drugiego elementu tablicy oraz z (0)
+    *a = z;         // Ustawienie pierwszego elementu tablicy na wartość zmiennej z (czyli a[0] = 0)
+    exit(0);
+}
+
+```
+
+Po wykonaniu powyższego kodu zawartość tablicy a będzie:
+
+<p className='font-bold text-green-700'>
+  a[0] = 0 <br />
+  a[1] = 0 <br />
+  a[2] = 4 <br />
+  a[3] = 4 <br />
+  a[4] = 6 <br />
+  a[5] = 6
+</p>
+
+Ostateczne wartości wynikają z operacji przeprowadzanych na tablicy a w funkcji zmien oraz w main, zgodnie z opisanymi krokami.
+
+### 11. Do dodania
+
+### 12. Jaka będzie zawartość tablicy a po wykonaniu poniższego fragmentu programu, jeśli funkcja wartosc zdefiniowana jest następująco:
+
+(a)
+
+```c
+int wartosc(int x) {
+    int v = 1;
+    v += x;
+    return v;
+}
+
+int main() {
+    int a[3];
+    a[0] = wartosc(2); // a[0] = 3 (1 + 2)
+    a[1] = wartosc(3); // a[1] = 4 (1 + 3)
+    a[2] = wartosc(4); // a[2] = 5 (1 + 4)
+}
+```
+
+(b)
+
+```c
+int wartosc(int x) {
+    static int v = 1;
+    v += x;
+    return v;
+}
+
+int main() {
+    int a[3];
+    a[0] = wartosc(2); // a[0] = 3 (1 + 2)
+    a[1] = wartosc(3); // a[1] = 6 (3 + 3)
+    a[2] = wartosc(4); // a[2] = 10 (6 + 4)
+}
+```
+
+<div className="flex flex-row align-center justify-around">
+<div className="flex align-center justify-center">
+(a)
+
+<p className="font-bold text-green-700">
+a[0] = 3
+
+a[1] = 4
+
+a[2] = 5
+
+</p>
+</div>
+<div className="flex align-center justify-center">
+(b)
+
+    <p className="font-bold text-green-700">
+    a[0] = 3
+
+    a[1] = 6
+
+    a[2] = 10
+
+    </p>
+
+</div>
+</div>
+
+### 13. do zrobienia
+
+### 14. do zrobienia
+
+### 15. do zrobienia
