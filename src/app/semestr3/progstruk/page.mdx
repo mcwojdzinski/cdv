@@ -346,3 +346,25 @@ a[2] = 5
 ### 14. do zrobienia
 
 ### 15. do zrobienia
+
+## Zadania otwarte
+
+### 19. Proszę uzupełnić poniższą definicję funkcji w taki sposób, aby wypełniała ona napis przekazany przez parametr text kodem ostatniego znaku tego napisu.
+
+```c
+void last_char (const char text[]) {
+    int len = 0;
+    while (text[len] != '\0') {
+        len++;
+    }
+    if (len > 0) {
+        char lastCharCode = text[len - 1];
+        printf("%c", lastCharCode);
+    }
+    else {
+        printf("empty string");
+    }
+}
+```
+
+### 20. Proszę uzupełnić poniższą definicję funkcji w taki sposób, aby zwracała ona wskaźnik na początek drugiego słowa w napisie przekazanym przez parametr text, przyjmując jako separatory słów znaki spacji i tabulatora.
